@@ -414,11 +414,6 @@ void *HWEventsDRM::DisplayEventHandler() {
     DLOGE("Couldn't set SCHED_RR: %d", errno);
   }
 
-  // Real Time task with lowest priority.
-  struct sched_param param = {0};
-  param.sched_priority = sched_get_priority_min(SCHED_FIFO);
-  sched_setscheduler(0, SCHED_FIFO, &param);
-
   while (!exit_threads_) {
     int error = Sys::poll_(poll_fds_.data(), UINT32(poll_fds_.size()), -1);
     if (error <= 0) {
